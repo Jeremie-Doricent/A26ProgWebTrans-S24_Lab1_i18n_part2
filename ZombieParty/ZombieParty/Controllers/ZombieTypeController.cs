@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using ZombieParty.Models;
 using ZombieParty.Models.Data;
 using ZombieParty.Utility;
@@ -12,11 +13,14 @@ namespace ZombieParty.Controllers
     {
         private ZombiePartyDbContext _baseDonnees { get; set; }
 
-        public ZombieTypeController(ZombiePartyDbContext baseDonnees)
+        private readonly IStringLocalizer<ZombieTypeController> _localizer;
+
+        public ZombieTypeController(ZombiePartyDbContext baseDonnees, IStringLocalizer<ZombieTypeController> localizer)
         {
             _baseDonnees = baseDonnees;
+            _localizer = localizer;
         }
-
+        
         public async Task<IActionResult> Index()
         {
             List<ZombieType> zombieTypesList = await _baseDonnees.ZombieTypes.ToListAsync();
